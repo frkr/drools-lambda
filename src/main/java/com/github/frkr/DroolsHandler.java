@@ -26,25 +26,64 @@
 package com.github.frkr;
 
 import com.amazonaws.services.lambda.runtime.Context;
-import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestStreamHandler;
+import org.kie.api.KieServices;
+import org.kie.api.runtime.KieContainer;
+import org.kie.api.runtime.KieSession;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintStream;
 
 public class DroolsHandler implements RequestStreamHandler {
 
+    public static void main(String[] args) throws Exception {
+        new DroolsHandler().handleRequest(System.in, System.out, null);
+    }
+
     @Override
-    public void handleRequest(InputStream inputStream, OutputStream outputStream, Context context) throws IOException {
-        String greetingString = "Hello ";
-        int letter;
-        while ((letter = inputStream.read()) != -1) {
-            outputStream.write(Character.toUpperCase(letter));
-            greetingString += (char) Character.toUpperCase(letter);
+    public void handleRequest(InputStream i, OutputStream o, Context c) throws IOException {
+        //LambdaLogger log = c.getLogger();
+        try {
+            KieServices ks = KieServices.Factory.get();
+            KieContainer kContainer = ks.getKieClasspathContainer();
+            KieSession kSession = kContainer.newKieSession("ksession-rules");
+
+            Message message = new Message();
+            message.setMessage("Mensagem Externa");
+            message.setStatus(Message.HELLO);
+            kSession.insert(message);
+            kSession.fireAllRules();
+        } catch (Exception e) {
+            e.printStackTrace(new PrintStream(o));
         }
-        outputStream.write("seu oreioudo".getBytes());
-        LambdaLogger logger = context.getLogger();
-        logger.log(String.format("Log output: Greeting is '%s'\n", greetingString));
+    }
+
+    public static class Message {
+
+        public static final int HELLO = 0;
+        public static final int GOODBYE = 1;
+
+        private String message;
+
+        private int status;
+
+        public String getMessage() {
+            return this.message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
+
+        public int getStatus() {
+            return this.status;
+        }
+
+        public void setStatus(int status) {
+            this.status = status;
+        }
+
     }
 }
