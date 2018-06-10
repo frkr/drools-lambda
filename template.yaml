@@ -2,9 +2,11 @@ AWSTemplateFormatVersion: 2010-09-09
 Transform: AWS::Serverless-2016-10-31
 
 Resources:
-  ExampleJavaFunction:
-    Type: AWS::Serverless::Function
+  DroolsFunction:
+    Type: 'AWS::Serverless::Function'
     Properties:
-      Handler: com.github.frkr.DroolsHandler
-      CodeUri: ./target/drools-lambda.jar
+      Handler: 'com.github.frkr.DroolsHandler'
+      CodeUri: ./target/lambda.jar
+      MemorySize: 64
+      Timeout: 5
       Runtime: java8
