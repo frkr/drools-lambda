@@ -25,21 +25,24 @@
 
 package com.sample
 import com.github.frkr.DroolsHandler
-import com.github.frkr.DroolsHandler.Message
+import com.github.frkr.Message
 
 rule "Hello World"
     when
         m : Message( status == Message.HELLO, myMessage : message )
     then
-        System.out.println( myMessage );
+        //System.out.println( myMessage );
+        m.getOutput().println( myMessage );
         m.setMessage( "Mensagem Interna" );
-        m.setStatus( DroolsHandler.Message.GOODBYE );
+        m.setStatus( Message.GOODBYE );
+
         update( m );
 end
 
 rule "GoodBye"
     when
-        Message( status == Message.GOODBYE, myMessage : message )
+        m : Message( status == Message.GOODBYE, myMessage : message )
     then
-        System.out.println( myMessage );
+        //System.out.println( myMessage );
+        m.getOutput().print( myMessage );
 end

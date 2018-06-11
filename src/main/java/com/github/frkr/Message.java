@@ -25,39 +25,39 @@
 
 package com.github.frkr;
 
-import com.amazonaws.services.lambda.runtime.Context;
-import com.amazonaws.services.lambda.runtime.RequestStreamHandler;
-import org.kie.api.KieServices;
-import org.kie.api.runtime.KieContainer;
-import org.kie.api.runtime.KieSession;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.PrintStream;
 
-public class DroolsHandler implements RequestStreamHandler {
+public class Message {
 
-    public static void main(String[] args) throws Exception {
-        new DroolsHandler().handleRequest(System.in, System.out, null);
+    public static final int HELLO = 0;
+    public static final int GOODBYE = 1;
+    private final PrintStream output;
+
+    private String message;
+
+    private int status;
+
+    public Message(PrintStream o) {
+        this.output = o;
     }
 
-    @Override
-    public void handleRequest(InputStream i, OutputStream o, Context c) throws IOException {
-        //LambdaLogger log = c.getLogger();
-        try {
-            KieServices ks = KieServices.Factory.get();
-            KieContainer kContainer = ks.getKieClasspathContainer();
-            KieSession kSession = kContainer.newKieSession("ksession-rules");
-
-            Message message = new Message(new PrintStream(o));
-            message.setMessage("Mensagem Externa");
-            message.setStatus(Message.HELLO);
-            kSession.insert(message);
-            kSession.fireAllRules();
-        } catch (Exception e) {
-            e.printStackTrace(new PrintStream(o));
-        }
+    public PrintStream getOutput() {
+        return output;
     }
 
+    public String getMessage() {
+        return this.message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public int getStatus() {
+        return this.status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 }
