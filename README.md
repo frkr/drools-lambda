@@ -1,3 +1,57 @@
+# Exemplo de Lambda
+
+1) Para a construção de um Lambda" é necessário o descritor de pacote "template.yaml".
+
+Lembrando que a classe que implementa "RequestStreamHandler" será "Singleton" até a JVM sair da instancia (kill).
+
+```yaml
+AWSTemplateFormatVersion: 2010-09-09
+Transform: AWS::Serverless-2016-10-31
+
+Resources:
+  DroolsFunction:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: 'com.github.frkr.DroolsHandler'
+      CodeUri: ./target/lambda.jar
+      MemorySize: 256
+      Timeout: 60
+      Runtime: java8
+```
+
+O pacote abaixo foi para suprir a necessidade de log.
+
+```xml
+<dependency>
+    <groupId>io.symphonia</groupId>
+    <artifactId>lambda-logging</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
+2) Usando o "Maven Shade", fará um pacote único de jar.
+
+Terminando o exemplo de Lambda, continuei com o exemplo de Drools.
+
+# Drools
+
+O arquivo "kmodule.xml" foi necessário para o Drools funcionar. Não testei se as regras podem ficar em outro diretório que não seja o "rules/". O pacote das regras esta como "com.sample" para exemplificar o DRL com o uso de "import".
+
+Neste exemplo, o Drools executa as regras no classpath simples assim:
+
+```java
+KieServices ks = KieServices.Factory.get();
+KieContainer kContainer = ks.getKieClasspathContainer();
+KieSession kSession = kContainer.newKieSession("ksession-rules");
+
+kSession.fireAllRules();
+```
+
+TODO: Fazer o Lambda receber um JSON com o DRL, executar e devolver outro JSON.
+
+---
+# Comandos úteis:
+
 ### Build
 ```
 mvn clean package shade:shade
