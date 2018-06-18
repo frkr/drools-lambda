@@ -23,39 +23,8 @@
  *
  */
 
-package com.github.frkr;
+package com.github.frkr.dominio;
 
-import java.io.PrintStream;
-
-public class Ticket {
-
-    private final PrintStream console;
-
-    private String texto;
-
-    private Status status;
-
-    public Ticket(PrintStream console) {
-        this.console = console;
-    }
-
-    public PrintStream getConsole() {
-        return console;
-    }
-
-    public String getTexto() {
-        return texto;
-    }
-
-    public void setTexto(String texto) {
-        this.texto = texto;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
+public enum Status {
+    INICIO,FIM
 }
