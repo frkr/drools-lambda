@@ -50,10 +50,10 @@ public class DroolsHandler implements RequestStreamHandler {
             KieContainer kContainer = ks.getKieClasspathContainer();
             KieSession kSession = kContainer.newKieSession("ksession-rules");
 
-            Message message = new Message(new PrintStream(o));
-            message.setMessage("Mensagem Externa");
-            message.setStatus(Message.HELLO);
-            kSession.insert(message);
+            Ticket ticket = new Ticket(new PrintStream(o));
+            ticket.setStatus(Status.INICIO);
+            ticket.setTexto("Mensagem do Java");
+            kSession.insert(ticket);
             kSession.fireAllRules();
         } catch (Exception e) {
             e.printStackTrace(new PrintStream(o));

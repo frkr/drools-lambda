@@ -23,26 +23,28 @@
  *
  */
 
-package com.sample
+package com.teste
 import com.github.frkr.DroolsHandler
-import com.github.frkr.Message
+import com.github.frkr.Ticket
+import com.github.frkr.Status
 
-rule "Hello World"
+rule "Ultima Regra"
     when
-        m : Message( status == Message.HELLO, myMessage : message )
+        messageObj : Ticket( status == Status.FIM, myTexto : texto )
     then
         //System.out.println( myMessage );
-        m.getOutput().println( myMessage );
-        m.setMessage( "Mensagem Interna" );
-        m.setStatus( Message.GOODBYE );
-
-        update( m );
+        messageObj.getConsole().println( myTexto );
 end
 
-rule "GoodBye"
+rule "Primeira Regra"
     when
-        m : Message( status == Message.GOODBYE, myMessage : message )
+        messageObj : Ticket( status == Status.INICIO, myTexto : texto )
     then
         //System.out.println( myMessage );
-        m.getOutput().print( myMessage );
+        messageObj.getConsole().println( myTexto );
+        messageObj.setTexto( "Mensagem HelloWorld" );
+        messageObj.setStatus( Status.FIM );
+
+        update( messageObj );
 end
+

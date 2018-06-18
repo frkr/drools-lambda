@@ -27,37 +27,35 @@ package com.github.frkr;
 
 import java.io.PrintStream;
 
-public class Message {
+public class Ticket {
 
-    public static final int HELLO = 0;
-    public static final int GOODBYE = 1;
-    private final PrintStream output;
+    private final PrintStream console;
 
-    private String message;
+    private String texto;
 
-    private int status;
+    private Status status;
 
-    public Message(PrintStream o) {
-        this.output = o;
+    public Ticket(PrintStream console) {
+        this.console = console;
     }
 
-    public PrintStream getOutput() {
-        return output;
+    public PrintStream getConsole() {
+        return console;
     }
 
-    public String getMessage() {
-        return this.message;
+    public String getTexto() {
+        return texto;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setTexto(String texto) {
+        this.texto = texto;
     }
 
-    public int getStatus() {
-        return this.status;
+    public Status getStatus() {
+        return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 }
