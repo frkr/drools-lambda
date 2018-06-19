@@ -23,19 +23,20 @@
  *
  */
 
-package com.github.frkr.objetos;
+package objetos;
 
-import com.github.frkr.dominio.Status;
+import dominio.Status;
 
 import java.io.PrintStream;
 
 public class Ticket {
 
-    private final PrintStream console;
-
     private String texto;
 
     private Status status;
+
+    //region GET SET
+    private final PrintStream console;
 
     public Ticket(PrintStream console) {
         this.console = console;
@@ -60,4 +61,5 @@ public class Ticket {
     public void setStatus(Status status) {
         this.status = status;
     }
+    //endregion
 }
