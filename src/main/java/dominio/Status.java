@@ -23,8 +23,9 @@
  *
  */
 
-package com.github.frkr.dominio;
+package dominio;
 
 public enum Status {
-    INICIO,FIM
+    INICIO,
+    FIM
 }

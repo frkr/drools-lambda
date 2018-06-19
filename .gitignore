@@ -1,4 +1,6 @@
 target/
 dependency-reduced-pom.xml
 output.log
-
+.idea/
+.idea/workspace.xml
+drools-lambda.iml
