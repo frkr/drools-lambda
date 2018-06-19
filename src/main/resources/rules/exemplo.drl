@@ -23,26 +23,45 @@
  *
  */
 
-package com.teste
-import com.github.frkr.DroolsHandler
-import com.github.frkr.dominio.Status
-import com.github.frkr.objetos.Ticket
+package teste
+import dominio.Status
+import objetos.Ticket
 
 rule "Ultima Regra"
     when
-        variavel : Ticket( status == Status.FIM, localTexto : texto )
+        variavel : Ticket( status == Status.FIM, textoLocal : texto )
     then
-        variavel.getConsole().println( localTexto );
+        variavel.getConsole().println( textoLocal );
 end
 
 rule "Primeira Regra"
     when
-        variavel : Ticket( status == Status.INICIO, localTexto : texto )
+        variavel : Ticket( status == Status.INICIO, textoLocal : texto )
     then
-        variavel.getConsole().println( localTexto );
+        variavel.getConsole().println( textoLocal );
         variavel.setTexto( "Mensagem da Primeira Regra" );
         variavel.setStatus( Status.FIM );
 
         update( variavel );
 end
 
+declare Pessoa
+    nome : String
+    endereco : String
+end
+
+rule "Imprimir pessoa"
+    when
+        Pessoa( nome == "davi", variavel : nome )
+        ticket : Ticket()
+    then
+        ticket.getConsole().println(variavel);
+end
+
+rule "Inserir pessoa"
+    when
+    then
+        Pessoa novaPessoa = new Pessoa();
+        novaPessoa.setNome("davi");
+        insert(novaPessoa);
+end

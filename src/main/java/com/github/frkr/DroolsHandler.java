@@ -27,8 +27,8 @@ package com.github.frkr;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestStreamHandler;
-import com.github.frkr.dominio.Status;
-import com.github.frkr.objetos.Ticket;
+import dominio.Status;
+import objetos.Ticket;
 import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
